@@ -106,6 +106,11 @@ export function retryable(
           callback(null, response, next, rawResponse);
           return;
         }
+         if (err) {
+             const error = new GoogleError(err);
+             callback(error)
+             return;
+          }
         canceller = null;
         if (retry.retryCodes.indexOf(err!.code!) < 0) {
           err.note =
